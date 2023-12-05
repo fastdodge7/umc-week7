@@ -3,9 +3,6 @@ package com.umc.study.domain;
 import com.umc.study.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-
-import java.util.Date;
 
 @Getter
 @Builder
@@ -29,7 +26,7 @@ public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
-    private User author;
+    private Member author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")

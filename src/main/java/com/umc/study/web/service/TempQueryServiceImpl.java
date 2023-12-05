@@ -1,4 +1,4 @@
-package com.umc.study.service;
+package com.umc.study.web.service;
 
 import com.umc.study.apiPayload.code.status.ErrorStatus;
 import com.umc.study.apiPayload.exception.handler.TempHandler;

@@ -1,7 +1,7 @@
 package com.umc.study.domain.mapping;
 
 import com.umc.study.domain.FoodType;
-import com.umc.study.domain.User;
+import com.umc.study.domain.Member;
 import com.umc.study.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +19,7 @@ public class FavoriteFoodType extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_type_id")

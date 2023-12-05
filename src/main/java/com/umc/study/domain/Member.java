@@ -1,6 +1,7 @@
 package com.umc.study.domain;
 
 import com.umc.study.domain.common.BaseEntity;
+import com.umc.study.domain.common.Gender;
 import com.umc.study.domain.mapping.FavoriteFoodType;
 import com.umc.study.domain.mapping.UserMissions;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-public class User extends BaseEntity {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +31,12 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 256)
     private String address;
 
+    @Column(nullable = false, length = 256)
+    private String specAddress;
+
+    @Column
+    private Gender gender;
+
     @Column(nullable = false)
     private Long totalPoint;
 
@@ -38,12 +45,12 @@ public class User extends BaseEntity {
 
     private Date deletedDate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<FavoriteFoodType> favoriteFoodTypeList = new ArrayList<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<FavoriteFoodType> memberPreferList = new ArrayList<>();
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<UserMissions> UserMissionList = new ArrayList<>();
 }
