@@ -11,6 +11,8 @@ import com.umc.study.web.repository.MemberRepository;
 import com.umc.study.web.repository.ReviewRepository;
 import com.umc.study.web.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,5 +34,13 @@ public class ReviewAddService{
         Review review = ReviewConverter.toReview(request, author, store);
         store.getReviewList().add(review);
         return reviewRepository.save(review);
+    }
+
+    @Transactional
+    public Page<Review> getReviewList(Long memberId, int pageNum) {
+        Member author = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저"));
+
+        return reviewRepository.findByMember(author, PageRequest.of(pageNum, 10));
     }
 }

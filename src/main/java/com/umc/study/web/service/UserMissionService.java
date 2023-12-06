@@ -16,6 +16,8 @@ import com.umc.study.web.repository.ReviewRepository;
 import com.umc.study.web.repository.StoreRepository;
 import com.umc.study.web.repository.UserMissionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,5 +37,12 @@ public class UserMissionService {
 
         UserMissions userMissions = UserMissionConverter.toUserMissions(request, member, mission);
         return userMissionRepository.save(userMissions);
+    }
+
+    @Transactional
+    public Page<UserMissions> getMyMission(Long id, int pageNum) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저"));
+        return userMissionRepository.findByMember(member, PageRequest.of(pageNum, 10));
     }
 }

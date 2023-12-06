@@ -13,6 +13,8 @@ import com.umc.study.web.repository.MissionRepository;
 import com.umc.study.web.repository.ReviewRepository;
 import com.umc.study.web.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,5 +44,13 @@ public class MissionAddService {
         Mission mission = MissionConverter.toMission(request, store);
         store.getMissionList().add(mission);
         return missionRepository.save(mission);
+    }
+
+    @Transactional
+    public Page<Mission> getMissionListOfStore(Long storeId, int pagenum) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게"));
+
+        return missionRepository.findByStore(store, PageRequest.of(pagenum, 10));
     }
 }
